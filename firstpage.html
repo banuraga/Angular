@@ -26,6 +26,24 @@
     <script>
             var demoApp = angular.module('demoApp', ['ngRoute']);
 
+            demoApp.factory('SimpleFactory', function(){
+                var listOfCustomers = [
+                    {name:'Banu', city:'Depok'},
+                    {name:'Teddy', city:'Bucharest'},
+                    {name:'Banuraga', city:'Bucharest'},
+                    {name:'Bobby', city:'Jakarta'}
+                ];
+
+                var factory = {};
+                factory.getListOfCustomers = function(){
+                    return listOfCustomers;
+                };
+                factory.postListOfCustomers = function(){
+
+                };
+                return factory;
+            });
+
             demoApp.config(function($routeProvider,$locationProvider){
                 $locationProvider.hashPrefix('');
                 $routeProvider
@@ -42,13 +60,16 @@
                 .otherwise({ redirectTo: '/view1' });
             });
 
-            demoApp.controller('SimpleController', function ($scope){
-                $scope.listOfCustomers = [
-                    {name:'Banu', city:'Depok'},
-                    {name:'Teddy', city:'Bucharest'},
-                    {name:'Banuraga', city:'Bucharest'},
-                    {name:'Bobby', city:'Jakarta'}
-                ];
+            demoApp.controller('SimpleController', function ($scope, SimpleFactory){
+                $scope.listOfCustomers = [];
+
+                init();
+
+                function init(){
+                    $scope.listOfCustomers = SimpleFactory.getListOfCustomers();
+                }
+
+
 
                 $scope.addCustomer = function(){
                     $scope.listOfCustomers.push({
