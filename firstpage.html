@@ -1,0 +1,65 @@
+<!-- Below is View -->
+<!DOCTYPE html>
+<html ng-app="demoApp">
+<head>
+    <title>Using AngularJS Directives and Data Binding</title>    
+</head>
+<body>
+    <!-- <div ng-controller="SimpleController">
+        Input Something:
+        <br />
+        <input type="text" ng-model="search"/> {{ search }}
+        <br />
+        <ul>
+            <li ng-repeat="customer in listOfCustomers | filter:search | orderBy:'city'">{{ customer.name }} - {{ customer.city }}</li>
+        </ul>
+    </div> -->
+    <div>
+        <!-- Placeholder for the Views -->
+        <div ng-view></div>
+    </div>
+
+    <script src="angular.min.js"></script>
+    <script src="angular-route.js"></script> <!-- Depedency for ngRoute-->
+
+<!-- Below is Controller -->
+    <script>
+            var demoApp = angular.module('demoApp', ['ngRoute']);
+
+            demoApp.config(function($routeProvider,$locationProvider){
+                $locationProvider.hashPrefix('');
+                $routeProvider
+                .when('/view1',
+                    {
+                        controller: 'SimpleController',
+                        templateUrl: 'View1.html'
+                    })
+                .when('/view2',
+                    {
+                        controller: 'SimpleController',
+                        templateUrl: 'View2.html'
+                    })
+                .otherwise({ redirectTo: '/view1' });
+            });
+
+            demoApp.controller('SimpleController', function ($scope){
+                $scope.listOfCustomers = [
+                    {name:'Banu', city:'Depok'},
+                    {name:'Teddy', city:'Bucharest'},
+                    {name:'Banuraga', city:'Bucharest'},
+                    {name:'Bobby', city:'Jakarta'}
+                ];
+
+                $scope.addCustomer = function(){
+                    $scope.listOfCustomers.push({
+                        name: $scope.newCustomer.name,
+                        city: $scope.newCustomer.city
+                    });
+                };
+            });
+
+        
+        </script>
+
+</body>
+</html>
