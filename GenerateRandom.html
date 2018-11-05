@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+    <title>Test Angular</title>
+</head>
+<body>
+    <div ng-controller="appController">
+        <button ng-click="generateRandom()">Generate Random Number</button>
+        <br />
+        {{randomNumberGenerated}}
+    </div>
+    
+    <script src="angular.min.js"></script>
+
+    <script>
+        var mainApp = angular.module('mainApp', []);
+
+        mainApp.service('randomNumber', function(){
+
+            // var num = Math.floor(Math.random()*10);
+            // this.generateRandomNumber = function(){
+            //     return num;
+            // };
+
+            var text = "Hello World!";
+            this.generateRandomNumber = function(){
+                return text;
+            };
+
+        });
+        
+        mainApp.controller('appController', function($scope, randomNumber){
+            $scope.generateRandom = function(){
+                $scope.randomNumberGenerated = randomNumber.generateRandomNumber();
+            };
+        });
+    
+    </script>
+
+</body>
+</html>
